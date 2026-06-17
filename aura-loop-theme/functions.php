@@ -233,7 +233,7 @@ function aura_loop_handle_contact() {
     }
 
     // Notify admin
-    $to = get_option('admin_email');
+    $to = 'project.colorgraphicz@gmail.com';
     $subject = "Aura Loop — New Membership Inquiry from $name";
     $body = "Name: $name\nEmail: $email\nPlan: " . ($plan ?: 'Not specified') . "\nVision: " . ($vision ?: 'Not provided') . "\nSubmitted: " . current_time('mysql');
     $headers = array(
