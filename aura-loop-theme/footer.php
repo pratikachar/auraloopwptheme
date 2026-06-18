@@ -2,14 +2,14 @@
   <div class="footer-top">
     <div>
       <img src="<?php echo esc_url(get_template_directory_uri() . '/Aura-Loop-02.png'); ?>" alt="Aura Loop" style="max-height:180px; width:auto; display:block; margin-bottom:1.25rem;">
-      <p class="footer-desc">A premium circular fashion technology platform dedicated to luxury streetwear restoration, upcycling, authentication, and trade — preserving designer craftsmanship for generations through sustainable membership.</p>
+      <p class="footer-desc"><?php echo esc_html(aura_get_front_field('footer_desc')); ?></p>
     </div>
 
-    <?php if (is_active_sidebar('footer-1')) : ?>
-      <div><?php dynamic_sidebar('footer-1'); ?></div>
-    <?php else : ?>
     <div>
       <div class="footer-col-title">Platform</div>
+      <?php if (has_nav_menu('footer-platform')) :
+        wp_nav_menu(array('theme_location' => 'footer-platform', 'container' => false, 'menu_class' => 'footer-col-links', 'depth' => 1, 'fallback_cb' => false));
+      else : ?>
       <ul class="footer-col-links">
         <li><a href="<?php echo esc_url(home_url('/#system')); ?>">The Ecosystem</a></li>
         <li><a href="<?php echo esc_url(home_url('/#system')); ?>">Restoration Studio</a></li>
@@ -17,36 +17,36 @@
         <li><a href="<?php echo esc_url(home_url('/#verify')); ?>">Digital Verification</a></li>
         <li><a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>">Blog</a></li>
       </ul>
+      <?php endif; ?>
     </div>
-    <?php endif; ?>
 
-    <?php if (is_active_sidebar('footer-2')) : ?>
-      <div><?php dynamic_sidebar('footer-2'); ?></div>
-    <?php else : ?>
     <div>
       <div class="footer-col-title">Membership</div>
+      <?php if (has_nav_menu('footer-membership')) :
+        wp_nav_menu(array('theme_location' => 'footer-membership', 'container' => false, 'menu_class' => 'footer-col-links', 'depth' => 1, 'fallback_cb' => false));
+      else : ?>
       <ul class="footer-col-links">
         <li><a href="<?php echo esc_url(home_url('/#connect?plan=archival')); ?>">Archival Tier — $85</a></li>
         <li><a href="<?php echo esc_url(home_url('/#connect?plan=syndicate')); ?>">Syndicate Tier — $150</a></li>
         <li><a href="<?php echo esc_url(home_url('/#system')); ?>">Designer Collaborations</a></li>
         <li><a href="<?php echo esc_url(home_url('/#connect')); ?>">Refer a Member</a></li>
       </ul>
+      <?php endif; ?>
     </div>
-    <?php endif; ?>
 
-    <?php if (is_active_sidebar('footer-3')) : ?>
-      <div><?php dynamic_sidebar('footer-3'); ?></div>
-    <?php else : ?>
     <div>
       <div class="footer-col-title">Company</div>
+      <?php if (has_nav_menu('footer-company')) :
+        wp_nav_menu(array('theme_location' => 'footer-company', 'container' => false, 'menu_class' => 'footer-col-links', 'depth' => 1, 'fallback_cb' => false));
+      else : ?>
       <ul class="footer-col-links">
         <li><a href="<?php echo esc_url(home_url('/#problem')); ?>">About Aura Loop</a></li>
         <li><a href="<?php echo esc_url(home_url('/#system')); ?>">Studio Partners</a></li>
         <li><a href="<?php echo esc_url(home_url('/#connect')); ?>">Press &amp; Media</a></li>
         <li><a href="<?php echo esc_url(home_url('/#connect')); ?>">Contact</a></li>
       </ul>
+      <?php endif; ?>
     </div>
-    <?php endif; ?>
   </div>
 
   <div class="footer-bottom">
@@ -66,9 +66,13 @@
       </div>
     </div>
     <nav class="footer-legal" aria-label="Legal links">
+      <?php if (has_nav_menu('footer')) :
+        wp_nav_menu(array('theme_location' => 'footer', 'container' => false, 'menu_class' => 'footer-legal', 'depth' => 1, 'fallback_cb' => false));
+      else : ?>
       <a href="<?php echo esc_url(get_permalink(get_page_by_path('privacy-policy'))); ?>">Privacy Policy</a>
       <a href="<?php echo esc_url(get_permalink(get_page_by_path('terms-of-service'))); ?>">Terms of Service</a>
       <a href="<?php echo esc_url(get_permalink(get_page_by_path('cookie-policy'))); ?>">Cookie Policy</a>
+      <?php endif; ?>
     </nav>
   </div>
 </footer>

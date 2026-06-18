@@ -28,9 +28,12 @@ function aura_loop_setup() {
 
     // Register navigation menus
     register_nav_menus(array(
-        'primary' => esc_html__('Primary Menu (Header)', 'aura-loop'),
-        'footer'  => esc_html__('Footer Menu', 'aura-loop'),
-        'mobile'  => esc_html__('Mobile Menu', 'aura-loop'),
+        'primary'           => esc_html__('Primary Menu (Header)', 'aura-loop'),
+        'footer'            => esc_html__('Footer Legal Links', 'aura-loop'),
+        'mobile'            => esc_html__('Mobile Menu', 'aura-loop'),
+        'footer-platform'   => esc_html__('Footer Column — Platform', 'aura-loop'),
+        'footer-membership' => esc_html__('Footer Column — Membership', 'aura-loop'),
+        'footer-company'    => esc_html__('Footer Column — Company', 'aura-loop'),
     ));
 
     // Set thumbnail size
@@ -412,3 +415,194 @@ function aura_create_legal_pages() {
     }
 }
 add_action('after_switch_theme', 'aura_create_legal_pages');
+
+// ==============================
+// FRONT PAGE CUSTOM FIELDS (META BOXES)
+// ==============================
+function aura_front_defaults() {
+    return array(
+        'hero_eyebrow'    => 'Circular Fashion Technology',
+        'hero_headline'   => "The end of the<br>\n<span class=\"struck\">temporary</span><br>\nwardrobe.<br>\nOwn the <span class=\"hi\">style.</span><br>\nCirculate the asset.",
+        'hero_lead'       => 'Aura Loop is a premium circular fashion ecosystem for luxury streetwear and designer apparel. We repair, upcycle, authenticate, and trade high-end garments, transforming clothing from a depreciating purchase into an evolving lifestyle asset through sustainable fashion membership.',
+        'hero_cta_1'      => 'Initiate Your First Loop',
+        'hero_cta_1_url'  => '#connect',
+        'hero_cta_2'      => 'How the Ecosystem Works',
+        'hero_cta_2_url'  => '#system',
+        'ticker_items'    => "Repair\nRenew\nUpcycle\nEvolve\nTrade\nCirculate\nAuthenticate\nPreserve\nElevate",
+        'problem_eyebrow' => 'The Inconvenient Truth',
+        'problem_heading' => "The high cost of<br><em>disposable</em> luxury.",
+        'problem_p1'      => 'Modern streetwear was built on exclusivity and structural integrity, yet the current fashion cycle forces premature obsolescence. Minor tears, natural fading, and changing personal tastes relegate thousands of dollars of premium, heavyweight cotton and technical outerwear to the back of closets or landfills.',
+        'problem_p2'      => 'True luxury is not disposable. The modern wardrobe requires an infrastructure that respects both the craft of design and the necessity of preservation. Buying new is a linear dead end. Buying for longevity is the new market standard.',
+        'system_eyebrow'  => 'The Process',
+        'system_heading'  => 'A closed loop. Zero waste.',
+        'system_lead'     => 'Three circular economy phases designed to keep premium designer garments in perpetual circulation — from restoration and upcycling to authenticated trade.',
+        'system_1_num'    => '01 / Repair & Renew',
+        'system_1_title'  => 'The Restoration Phase',
+        'system_1_desc'   => 'Send your worn, faded, or structurally compromised designer garments to our restoration studio. Our expert tailors and textile conservators fix seams, revive dyes, and restore structural integrity to original manufacturing specifications.',
+        'system_2_num'    => '02 / Upcycle & Evolve',
+        'system_2_title'  => 'The Adaptation Phase',
+        'system_2_desc'   => 'When a garment no longer fits your personal aesthetic, it undergoes strategic modification. We collaborate with independent designers to reconstruct your pieces, creating limited-edition, custom variations that renew the item\'s market value.',
+        'system_3_num'    => '03 / Trade & Circulate',
+        'system_3_title'  => 'The Trade Ecosystem',
+        'system_3_desc'   => 'Transition your pieces directly out of your digital wardrobe and into our verification ecosystem. Trade your authenticated clothing for credits to acquire curated, pre-circulated garments from other members of the Loop & Layer platform.',
+        'pricing_eyebrow' => 'Membership Tiers',
+        'pricing_heading' => 'Choose your access level.',
+        'pricing_sub'     => 'Two pathways into the circular economy. One direction.',
+        'tier1_label'       => 'Entry Access',
+        'tier1_name'        => 'The Archival Membership',
+        'tier1_price'       => '$85',
+        'tier1_price_label' => '/ month',
+        'tier1_features'    => "Two professional garment restorations per quarter\nDirect access to the digital trading ecosystem with zero transaction fees\nComplimentary insured shipping on all inward and outward loops",
+        'tier1_cta'         => 'Select Archival Tier',
+        'tier1_cta_url'     => '#connect?plan=archival',
+        'tier2_badge'       => 'Most Popular',
+        'tier2_label'       => 'Full Access',
+        'tier2_name'        => 'The Syndicate Membership',
+        'tier2_price'       => '$150',
+        'tier2_price_label' => '/ month',
+        'tier2_features'    => "Unlimited structural repairs and monthly color revivals\nPriority access to limited-edition upcycled designer collaborations\nDirect personal closet management and white-glove courier pickup",
+        'tier2_cta'         => 'Join the Syndicate',
+        'tier2_cta_url'     => '#connect?plan=syndicate',
+        'verify_eyebrow'  => 'Authentication Protocol',
+        'verify_heading'  => "Verifiable authenticity.<br><span>Guaranteed</span> circularity.",
+        'verify_body'     => 'Every garment entering our ecosystem passes through a rigorous multi-point physical inspection and digital verification process. We verify stitching patterns, hardware weight, fabric density, and production codes. Our digital tracking system assigns a unique cryptographic ledger entry to each item, documenting its entire restoration history and ownership provenance. You receive a verified asset, every single time.',
+        'verify_metric_1_num'   => '12+',
+        'verify_metric_1_label' => 'Inspection Checkpoints',
+        'verify_metric_2_num'   => '100%',
+        'verify_metric_2_label' => 'Digital Provenance',
+        'verify_metric_3_num'   => '0%',
+        'verify_metric_3_label' => 'Counterfeit Rate',
+        'form_heading' => 'Initiate your journey',
+        'form_text'    => 'Reserved access. Receive early invitations and circular insights.',
+        'footer_desc'  => 'A premium circular fashion technology platform dedicated to luxury streetwear restoration, upcycling, authentication, and trade — preserving designer craftsmanship for generations through sustainable membership.',
+    );
+}
+
+function aura_get_front_field($key) {
+    $defaults = aura_front_defaults();
+    $front_id = (int) get_option('page_on_front');
+    if (!$front_id) $front_id = get_the_ID();
+    $val = get_post_meta($front_id, '_aura_' . $key, true);
+    return $val !== '' ? $val : ($defaults[$key] ?? '');
+}
+
+function aura_add_front_meta_boxes() {
+    $front_id = (int) get_option('page_on_front');
+    if (!$front_id) return;
+    add_meta_box('aura_front_fields', __('Home Page Content', 'aura-loop'), 'aura_render_front_meta_box', 'page', 'normal', 'high');
+}
+add_action('add_meta_boxes', 'aura_add_front_meta_boxes');
+
+function aura_render_front_meta_box($post) {
+    wp_nonce_field('aura_front_save', 'aura_front_nonce');
+    $defaults = aura_front_defaults();
+    $sections = array(
+        'Hero' => array(
+            'hero_eyebrow'    => array('label' => 'Eyebrow', 'type' => 'text'),
+            'hero_headline'   => array('label' => 'Headline (HTML allowed)', 'type' => 'textarea', 'rows' => 6),
+            'hero_lead'       => array('label' => 'Lead paragraph', 'type' => 'textarea', 'rows' => 4),
+            'hero_cta_1'      => array('label' => 'CTA 1 text', 'type' => 'text'),
+            'hero_cta_1_url'  => array('label' => 'CTA 1 link', 'type' => 'text'),
+            'hero_cta_2'      => array('label' => 'CTA 2 text', 'type' => 'text'),
+            'hero_cta_2_url'  => array('label' => 'CTA 2 link', 'type' => 'text'),
+        ),
+        'Ticker' => array(
+            'ticker_items'    => array('label' => 'Ticker words (one per line)', 'type' => 'textarea', 'rows' => 6),
+        ),
+        'Truth / Problem' => array(
+            'problem_eyebrow' => array('label' => 'Eyebrow', 'type' => 'text'),
+            'problem_heading' => array('label' => 'Heading (HTML)', 'type' => 'textarea', 'rows' => 3),
+            'problem_p1'      => array('label' => 'Paragraph 1', 'type' => 'textarea', 'rows' => 4),
+            'problem_p2'      => array('label' => 'Paragraph 2', 'type' => 'textarea', 'rows' => 4),
+        ),
+        'System / Process' => array(
+            'system_eyebrow'  => array('label' => 'Eyebrow', 'type' => 'text'),
+            'system_heading'  => array('label' => 'Heading', 'type' => 'text'),
+            'system_lead'     => array('label' => 'Lead paragraph', 'type' => 'textarea', 'rows' => 3),
+            'system_1_num'    => array('label' => 'Card 1 — Number', 'type' => 'text'),
+            'system_1_title'  => array('label' => 'Card 1 — Title', 'type' => 'text'),
+            'system_1_desc'   => array('label' => 'Card 1 — Description', 'type' => 'textarea', 'rows' => 3),
+            'system_2_num'    => array('label' => 'Card 2 — Number', 'type' => 'text'),
+            'system_2_title'  => array('label' => 'Card 2 — Title', 'type' => 'text'),
+            'system_2_desc'   => array('label' => 'Card 2 — Description', 'type' => 'textarea', 'rows' => 3),
+            'system_3_num'    => array('label' => 'Card 3 — Number', 'type' => 'text'),
+            'system_3_title'  => array('label' => 'Card 3 — Title', 'type' => 'text'),
+            'system_3_desc'   => array('label' => 'Card 3 — Description', 'type' => 'textarea', 'rows' => 3),
+        ),
+        'Pricing / Membership' => array(
+            'pricing_eyebrow' => array('label' => 'Eyebrow', 'type' => 'text'),
+            'pricing_heading' => array('label' => 'Heading', 'type' => 'text'),
+            'pricing_sub'     => array('label' => 'Subtitle', 'type' => 'text'),
+            'tier1_label'       => array('label' => 'Tier 1 — Label', 'type' => 'text'),
+            'tier1_name'        => array('label' => 'Tier 1 — Name', 'type' => 'text'),
+            'tier1_price'       => array('label' => 'Tier 1 — Price', 'type' => 'text'),
+            'tier1_price_label' => array('label' => 'Tier 1 — Price suffix', 'type' => 'text'),
+            'tier1_features'    => array('label' => 'Tier 1 — Features (one per line)', 'type' => 'textarea', 'rows' => 4),
+            'tier1_cta'         => array('label' => 'Tier 1 — CTA text', 'type' => 'text'),
+            'tier1_cta_url'     => array('label' => 'Tier 1 — CTA link', 'type' => 'text'),
+        ),
+        'Pricing — Tier 2' => array(
+            'tier2_badge'       => array('label' => 'Tier 2 — Badge', 'type' => 'text'),
+            'tier2_label'       => array('label' => 'Tier 2 — Label', 'type' => 'text'),
+            'tier2_name'        => array('label' => 'Tier 2 — Name', 'type' => 'text'),
+            'tier2_price'       => array('label' => 'Tier 2 — Price', 'type' => 'text'),
+            'tier2_price_label' => array('label' => 'Tier 2 — Price suffix', 'type' => 'text'),
+            'tier2_features'    => array('label' => 'Tier 2 — Features (one per line)', 'type' => 'textarea', 'rows' => 4),
+            'tier2_cta'         => array('label' => 'Tier 2 — CTA text', 'type' => 'text'),
+            'tier2_cta_url'     => array('label' => 'Tier 2 — CTA link', 'type' => 'text'),
+        ),
+        'Verification' => array(
+            'verify_eyebrow'  => array('label' => 'Eyebrow', 'type' => 'text'),
+            'verify_heading'  => array('label' => 'Heading (HTML)', 'type' => 'textarea', 'rows' => 3),
+            'verify_body'     => array('label' => 'Body text', 'type' => 'textarea', 'rows' => 5),
+            'verify_metric_1_num'   => array('label' => 'Metric 1 — Number', 'type' => 'text'),
+            'verify_metric_1_label' => array('label' => 'Metric 1 — Label', 'type' => 'text'),
+            'verify_metric_2_num'   => array('label' => 'Metric 2 — Number', 'type' => 'text'),
+            'verify_metric_2_label' => array('label' => 'Metric 2 — Label', 'type' => 'text'),
+            'verify_metric_3_num'   => array('label' => 'Metric 3 — Number', 'type' => 'text'),
+            'verify_metric_3_label' => array('label' => 'Metric 3 — Label', 'type' => 'text'),
+        ),
+        'Form / Contact' => array(
+            'form_heading' => array('label' => 'Heading', 'type' => 'text'),
+            'form_text'    => array('label' => 'Subtitle', 'type' => 'text'),
+        ),
+        'Footer' => array(
+            'footer_desc'  => array('label' => 'Footer description', 'type' => 'textarea', 'rows' => 3),
+        ),
+    );
+
+    foreach ($sections as $section_name => $fields) {
+        echo '<div style="margin:0 -12px 16px; padding:12px 14px; background:rgba(0,0,0,0.02); border-bottom:1px solid #e0e0e0;">';
+        echo '<h3 style="margin:0 0 12px; font-size:13px; text-transform:uppercase; letter-spacing:1px; color:#666;">' . esc_html($section_name) . '</h3>';
+        foreach ($fields as $key => $def) {
+            $val = get_post_meta($post->ID, '_aura_' . $key, true);
+            if ($val === '') $val = $defaults[$key] ?? '';
+            $id = 'aura_field_' . $key;
+            echo '<div style="margin-bottom:10px;">';
+            echo '<label for="' . esc_attr($id) . '" style="display:block; font-weight:600; font-size:12px; margin-bottom:3px; color:#444;">' . esc_html($def['label']) . '</label>';
+            if ($def['type'] === 'textarea') {
+                $rows = isset($def['rows']) ? (int) $def['rows'] : 4;
+                echo '<textarea id="' . esc_attr($id) . '" name="_aura_' . esc_attr($key) . '" rows="' . $rows . '" style="width:100%; padding:6px 8px; border:1px solid #ccc; border-radius:4px; font-size:13px;">' . esc_textarea($val) . '</textarea>';
+            } else {
+                echo '<input type="text" id="' . esc_attr($id) . '" name="_aura_' . esc_attr($key) . '" value="' . esc_attr($val) . '" style="width:100%; padding:5px 8px; border:1px solid #ccc; border-radius:4px; font-size:13px;">';
+            }
+            echo '</div>';
+        }
+        echo '</div>';
+    }
+}
+
+function aura_save_front_meta_box($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!isset($_POST['aura_front_nonce']) || !wp_verify_nonce($_POST['aura_front_nonce'], 'aura_front_save')) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $defaults = aura_front_defaults();
+    foreach ($defaults as $key => $default) {
+        $field_key = '_aura_' . $key;
+        if (isset($_POST[$field_key])) {
+            update_post_meta($post_id, $field_key, wp_kses_post(stripslashes($_POST[$field_key])));
+        }
+    }
+}
+add_action('save_post', 'aura_save_front_meta_box');

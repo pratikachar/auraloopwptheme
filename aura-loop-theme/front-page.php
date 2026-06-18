@@ -8,20 +8,12 @@ get_header();
 
 <section class="hero">
   <div class="hero-content">
-    <div class="eyebrow">Circular Fashion Technology</div>
-    <h1 class="hero-h1">
-      The end of the<br>
-      <span class="struck">temporary</span><br>
-      wardrobe.<br>
-      Own the <span class="hi">style.</span><br>
-      Circulate the asset.
-    </h1>
-    <p class="hero-lead">
-      Aura Loop is a premium circular fashion ecosystem for luxury streetwear and designer apparel. We repair, upcycle, authenticate, and trade high-end garments, transforming clothing from a depreciating purchase into an evolving lifestyle asset through sustainable fashion membership.
-    </p>
+    <div class="eyebrow"><?php echo wp_kses_post(aura_get_front_field('hero_eyebrow')); ?></div>
+    <h1 class="hero-h1"><?php echo wp_kses_post(aura_get_front_field('hero_headline')); ?></h1>
+    <p class="hero-lead"><?php echo wp_kses_post(aura_get_front_field('hero_lead')); ?></p>
     <div class="cta-row">
-      <a href="#connect" class="btn-mint">Initiate Your First Loop</a>
-      <a href="#system" class="btn-ghost">How the Ecosystem Works</a>
+      <a href="<?php echo esc_url(aura_get_front_field('hero_cta_1_url')); ?>" class="btn-mint"><?php echo esc_html(aura_get_front_field('hero_cta_1')); ?></a>
+      <a href="<?php echo esc_url(aura_get_front_field('hero_cta_2_url')); ?>" class="btn-ghost"><?php echo esc_html(aura_get_front_field('hero_cta_2')); ?></a>
     </div>
   </div>
   <div class="hero-visual" aria-hidden="true">
@@ -68,25 +60,21 @@ get_header();
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track" id="tickerTrack">
-    <span class="ticker-item">Repair <span>&#10022;</span></span>
-    <span class="ticker-item">Renew <span>&#10022;</span></span>
-    <span class="ticker-item">Upcycle <span>&#10022;</span></span>
-    <span class="ticker-item">Evolve <span>&#10022;</span></span>
-    <span class="ticker-item">Trade <span>&#10022;</span></span>
-    <span class="ticker-item">Circulate <span>&#10022;</span></span>
-    <span class="ticker-item">Authenticate <span>&#10022;</span></span>
-    <span class="ticker-item">Preserve <span>&#10022;</span></span>
-    <span class="ticker-item">Elevate <span>&#10022;</span></span>
+    <?php $ticker_items = explode("\n", aura_get_front_field('ticker_items')); ?>
+    <?php foreach ($ticker_items as $item) : ?>
+      <?php $item = trim($item); if (!$item) continue; ?>
+      <span class="ticker-item"><?php echo esc_html($item); ?> <span>&#10022;</span></span>
+    <?php endforeach; ?>
   </div>
 </div>
 
 <section class="problem" id="problem">
   <div class="problem-inner">
-    <div class="eyebrow reveal">The Inconvenient Truth</div>
-    <h2 class="problem-h2 reveal delay-1">The high cost of<br><em>disposable</em> luxury.</h2>
+    <div class="eyebrow reveal"><?php echo wp_kses_post(aura_get_front_field('problem_eyebrow')); ?></div>
+    <h2 class="problem-h2 reveal delay-1"><?php echo wp_kses_post(aura_get_front_field('problem_heading')); ?></h2>
     <div class="problem-cols">
-      <p class="problem-p reveal delay-2">Modern streetwear was built on exclusivity and structural integrity, yet the current fashion cycle forces premature obsolescence. Minor tears, natural fading, and changing personal tastes relegate thousands of dollars of premium, heavyweight cotton and technical outerwear to the back of closets or landfills.</p>
-      <p class="problem-p reveal delay-3">True luxury is not disposable. The modern wardrobe requires an infrastructure that respects both the craft of design and the necessity of preservation. Buying new is a linear dead end. Buying for longevity is the new market standard.</p>
+      <p class="problem-p reveal delay-2"><?php echo wp_kses_post(aura_get_front_field('problem_p1')); ?></p>
+      <p class="problem-p reveal delay-3"><?php echo wp_kses_post(aura_get_front_field('problem_p2')); ?></p>
     </div>
     <div class="problem-ghost" aria-hidden="true">92%</div>
   </div>
@@ -94,15 +82,15 @@ get_header();
 
 <section class="system" id="system">
   <div class="system-header reveal">
-    <div class="eyebrow">The Process</div>
-    <h2 class="system-h2">A closed loop. Zero waste.</h2>
-    <p class="system-lead">Three circular economy phases designed to keep premium designer garments in perpetual circulation — from restoration and upcycling to authenticated trade.</p>
+    <div class="eyebrow"><?php echo wp_kses_post(aura_get_front_field('system_eyebrow')); ?></div>
+    <h2 class="system-h2"><?php echo wp_kses_post(aura_get_front_field('system_heading')); ?></h2>
+    <p class="system-lead"><?php echo wp_kses_post(aura_get_front_field('system_lead')); ?></p>
   </div>
   <div class="system-grid">
     <div class="sys-col reveal">
-      <span class="sys-num">01 / Repair &amp; Renew</span>
-      <h3 class="sys-h3">The Restoration Phase</h3>
-      <p class="sys-body">Send your worn, faded, or structurally compromised designer garments to our restoration studio. Our expert tailors and textile conservators fix seams, revive dyes, and restore structural integrity to original manufacturing specifications.</p>
+      <span class="sys-num"><?php echo esc_html(aura_get_front_field('system_1_num')); ?></span>
+      <h3 class="sys-h3"><?php echo esc_html(aura_get_front_field('system_1_title')); ?></h3>
+      <p class="sys-body"><?php echo wp_kses_post(aura_get_front_field('system_1_desc')); ?></p>
       <a href="#connect?plan=archival" class="sys-arrow" aria-label="Request Archival Membership">
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 10 L10 2 M4 2 H10 V8"/>
@@ -110,9 +98,9 @@ get_header();
       </a>
     </div>
     <div class="sys-col reveal delay-1">
-      <span class="sys-num">02 / Upcycle &amp; Evolve</span>
-      <h3 class="sys-h3">The Adaptation Phase</h3>
-      <p class="sys-body">When a garment no longer fits your personal aesthetic, it undergoes strategic modification. We collaborate with independent designers to reconstruct your pieces, creating limited-edition, custom variations that renew the item's market value.</p>
+      <span class="sys-num"><?php echo esc_html(aura_get_front_field('system_2_num')); ?></span>
+      <h3 class="sys-h3"><?php echo esc_html(aura_get_front_field('system_2_title')); ?></h3>
+      <p class="sys-body"><?php echo wp_kses_post(aura_get_front_field('system_2_desc')); ?></p>
       <a href="#connect?plan=archival" class="sys-arrow" aria-label="Request Archival Membership">
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 10 L10 2 M4 2 H10 V8"/>
@@ -120,9 +108,9 @@ get_header();
       </a>
     </div>
     <div class="sys-col reveal delay-2">
-      <span class="sys-num">03 / Trade &amp; Circulate</span>
-      <h3 class="sys-h3">The Trade Ecosystem</h3>
-      <p class="sys-body">Transition your pieces directly out of your digital wardrobe and into our verification ecosystem. Trade your authenticated clothing for credits to acquire curated, pre-circulated garments from other members of the Loop &amp; Layer platform.</p>
+      <span class="sys-num"><?php echo esc_html(aura_get_front_field('system_3_num')); ?></span>
+      <h3 class="sys-h3"><?php echo esc_html(aura_get_front_field('system_3_title')); ?></h3>
+      <p class="sys-body"><?php echo wp_kses_post(aura_get_front_field('system_3_desc')); ?></p>
       <a href="#connect?plan=syndicate" class="sys-arrow" aria-label="Request Syndicate Membership">
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 10 L10 2 M4 2 H10 V8"/>
@@ -134,35 +122,41 @@ get_header();
 
 <section class="pricing" id="membership">
   <div class="pricing-head reveal">
-    <div class="eyebrow" style="justify-content:center;">Membership Tiers</div>
-    <h2 class="pricing-h2">Choose your access level.</h2>
-    <p class="pricing-sub">Two pathways into the circular economy. One direction.</p>
+    <div class="eyebrow" style="justify-content:center;"><?php echo wp_kses_post(aura_get_front_field('pricing_eyebrow')); ?></div>
+    <h2 class="pricing-h2"><?php echo wp_kses_post(aura_get_front_field('pricing_heading')); ?></h2>
+    <p class="pricing-sub"><?php echo wp_kses_post(aura_get_front_field('pricing_sub')); ?></p>
   </div>
   <div class="pricing-grid">
     <div class="tier-card reveal">
-      <div class="tier-label">Entry Access</div>
-      <h3 class="tier-name">The Archival Membership</h3>
-      <div class="tier-price">$85 <span>/ month</span></div>
+      <div class="tier-label"><?php echo esc_html(aura_get_front_field('tier1_label')); ?></div>
+      <h3 class="tier-name"><?php echo esc_html(aura_get_front_field('tier1_name')); ?></h3>
+      <div class="tier-price"><?php echo esc_html(aura_get_front_field('tier1_price')); ?> <span><?php echo esc_html(aura_get_front_field('tier1_price_label')); ?></span></div>
       <div class="tier-divider"></div>
       <ul class="tier-features">
-        <li><span class="check" aria-hidden="true">&#10022;</span> Two professional garment restorations per quarter</li>
-        <li><span class="check" aria-hidden="true">&#10022;</span> Direct access to the digital trading ecosystem with zero transaction fees</li>
-        <li><span class="check" aria-hidden="true">&#10022;</span> Complimentary insured shipping on all inward and outward loops</li>
+        <?php $features = explode("\n", aura_get_front_field('tier1_features')); ?>
+        <?php foreach ($features as $f) : ?>
+          <?php $f = trim($f); if (!$f) continue; ?>
+          <li><span class="check" aria-hidden="true">&#10022;</span> <?php echo esc_html($f); ?></li>
+        <?php endforeach; ?>
       </ul>
-      <a href="#connect?plan=archival" class="btn-mint">Select Archival Tier</a>
+      <a href="<?php echo esc_url(aura_get_front_field('tier1_cta_url')); ?>" class="btn-mint"><?php echo esc_html(aura_get_front_field('tier1_cta')); ?></a>
     </div>
     <div class="tier-card featured reveal delay-1">
-      <div class="tier-badge">Most Popular</div>
-      <div class="tier-label">Full Access</div>
-      <h3 class="tier-name">The Syndicate Membership</h3>
-      <div class="tier-price">$150 <span>/ month</span></div>
+      <?php $badge = aura_get_front_field('tier2_badge'); if ($badge) : ?>
+      <div class="tier-badge"><?php echo esc_html($badge); ?></div>
+      <?php endif; ?>
+      <div class="tier-label"><?php echo esc_html(aura_get_front_field('tier2_label')); ?></div>
+      <h3 class="tier-name"><?php echo esc_html(aura_get_front_field('tier2_name')); ?></h3>
+      <div class="tier-price"><?php echo esc_html(aura_get_front_field('tier2_price')); ?> <span><?php echo esc_html(aura_get_front_field('tier2_price_label')); ?></span></div>
       <div class="tier-divider"></div>
       <ul class="tier-features">
-        <li><span class="check" aria-hidden="true">&#10022;</span> Unlimited structural repairs and monthly color revivals</li>
-        <li><span class="check" aria-hidden="true">&#10022;</span> Priority access to limited-edition upcycled designer collaborations</li>
-        <li><span class="check" aria-hidden="true">&#10022;</span> Direct personal closet management and white-glove courier pickup</li>
+        <?php $features = explode("\n", aura_get_front_field('tier2_features')); ?>
+        <?php foreach ($features as $f) : ?>
+          <?php $f = trim($f); if (!$f) continue; ?>
+          <li><span class="check" aria-hidden="true">&#10022;</span> <?php echo esc_html($f); ?></li>
+        <?php endforeach; ?>
       </ul>
-      <a href="#connect?plan=syndicate" class="btn-mint">Join the Syndicate</a>
+      <a href="<?php echo esc_url(aura_get_front_field('tier2_cta_url')); ?>" class="btn-mint"><?php echo esc_html(aura_get_front_field('tier2_cta')); ?></a>
     </div>
   </div>
 </section>
@@ -170,21 +164,21 @@ get_header();
 <section class="verify" id="verify">
   <div class="verify-inner">
     <div class="verify-left">
-      <div class="eyebrow reveal">Authentication Protocol</div>
-      <h2 class="verify-h2 reveal delay-1">Verifiable authenticity.<br><span>Guaranteed</span> circularity.</h2>
-      <p class="verify-body reveal delay-2">Every garment entering our ecosystem passes through a rigorous multi-point physical inspection and digital verification process. We verify stitching patterns, hardware weight, fabric density, and production codes. Our digital tracking system assigns a unique cryptographic ledger entry to each item, documenting its entire restoration history and ownership provenance. You receive a verified asset, every single time.</p>
+      <div class="eyebrow reveal"><?php echo wp_kses_post(aura_get_front_field('verify_eyebrow')); ?></div>
+      <h2 class="verify-h2 reveal delay-1"><?php echo wp_kses_post(aura_get_front_field('verify_heading')); ?></h2>
+      <p class="verify-body reveal delay-2"><?php echo wp_kses_post(aura_get_front_field('verify_body')); ?></p>
       <div class="metrics reveal delay-3">
         <div>
-          <div class="metric-num">12<sup>+</sup></div>
-          <div class="metric-label">Inspection Checkpoints</div>
+          <div class="metric-num"><?php echo wp_kses_post(aura_get_front_field('verify_metric_1_num')); ?></div>
+          <div class="metric-label"><?php echo esc_html(aura_get_front_field('verify_metric_1_label')); ?></div>
         </div>
         <div>
-          <div class="metric-num">100<sup>%</sup></div>
-          <div class="metric-label">Digital Provenance</div>
+          <div class="metric-num"><?php echo wp_kses_post(aura_get_front_field('verify_metric_2_num')); ?></div>
+          <div class="metric-label"><?php echo esc_html(aura_get_front_field('verify_metric_2_label')); ?></div>
         </div>
         <div>
-          <div class="metric-num">0<sup>%</sup></div>
-          <div class="metric-label">Counterfeit Rate</div>
+          <div class="metric-num"><?php echo wp_kses_post(aura_get_front_field('verify_metric_3_num')); ?></div>
+          <div class="metric-label"><?php echo esc_html(aura_get_front_field('verify_metric_3_label')); ?></div>
         </div>
       </div>
     </div>
@@ -207,8 +201,8 @@ get_header();
 <section class="content-form-section" id="connect">
   <div class="form-container reveal">
     <div class="form-header">
-      <h3>Initiate your journey</h3>
-      <p>Reserved access. Receive early invitations and circular insights.</p>
+      <h3><?php echo esc_html(aura_get_front_field('form_heading')); ?></h3>
+      <p><?php echo esc_html(aura_get_front_field('form_text')); ?></p>
     </div>
     <?php
       $cap1 = rand(3, 12);
