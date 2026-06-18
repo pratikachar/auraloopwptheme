@@ -43,7 +43,16 @@
       }
     });
     backBtn.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      var start = window.scrollY;
+      var startTime = null;
+      function scrollStep(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / 900, 1);
+        var ease = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, start * (1 - ease));
+        if (progress < 1) requestAnimationFrame(scrollStep);
+      }
+      requestAnimationFrame(scrollStep);
     });
   }
 
@@ -179,6 +188,39 @@
   if (tickerTrack) {
     var originalHTML = tickerTrack.innerHTML;
     tickerTrack.innerHTML = originalHTML + originalHTML;
+  }
+
+  // HAMBURGER MENU TOGGLE
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileClose = document.getElementById('mobileClose');
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  function openMobileMenu() {
+    mobileMenu.classList.add('open');
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+    if (mobileClose) mobileClose.addEventListener('click', closeMobileMenu);
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
+    });
   }
 
   // RESPECT PREFERS-REDUCED-MOTION

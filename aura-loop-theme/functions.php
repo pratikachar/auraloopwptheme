@@ -30,6 +30,7 @@ function aura_loop_setup() {
     register_nav_menus(array(
         'primary' => esc_html__('Primary Menu (Header)', 'aura-loop'),
         'footer'  => esc_html__('Footer Menu', 'aura-loop'),
+        'mobile'  => esc_html__('Mobile Menu', 'aura-loop'),
     ));
 
     // Set thumbnail size
@@ -350,3 +351,64 @@ function aura_clear_campaign_cron() {
     if ($t) wp_unschedule_event($t, 'aura_send_campaign_batch');
 }
 add_action('switch_theme', 'aura_clear_campaign_cron');
+
+// ==============================
+// CUSTOMIZER: SOCIAL LINKS
+// ==============================
+function aura_customize_register($wp_customize) {
+    $wp_customize->add_section('aura_social', array(
+        'title'    => __('Social Media', 'aura-loop'),
+        'priority' => 130,
+    ));
+
+    $networks = array(
+        'youtube'  => 'YouTube URL',
+        'linkedin' => 'LinkedIn URL',
+        'facebook' => 'Facebook URL',
+        'instagram' => 'Instagram URL',
+    );
+
+    foreach ($networks as $key => $label) {
+        $wp_customize->add_setting("aura_social_$key", array('default' => '', 'sanitize_callback' => 'esc_url_raw'));
+        $wp_customize->add_control("aura_social_$key", array(
+            'label'   => $label,
+            'section' => 'aura_social',
+            'type'    => 'url',
+        ));
+    }
+}
+add_action('customize_register', 'aura_customize_register');
+
+// ==============================
+// AUTO-CREATE LEGAL PAGES ON THEME ACTIVATION
+// ==============================
+function aura_create_legal_pages() {
+    $pages = array(
+        'privacy-policy' => array(
+            'title' => 'Privacy Policy',
+            'content' => '<h2>Privacy Policy</h2><p>Last updated: June 2026</p><p>Aura Loop ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.</p><h3>Information We Collect</h3><p>We collect personal information you voluntarily provide when you fill out our contact form, including your name, email address, and any details you share about your fashion restoration or membership interests.</p><h3>How We Use Your Information</h3><p>We use the information we collect to respond to your inquiries, process membership requests, improve our platform, send relevant updates about our circular fashion ecosystem, and comply with legal obligations.</p><h3>Data Protection</h3><p>We implement appropriate technical and organizational measures to protect your personal data. Your information is stored securely and only accessed by authorized personnel.</p><h3>Third-Party Services</h3><p>We may use third-party services for analytics and marketing. These service providers have their own privacy policies governing data handling.</p><h3>Your Rights</h3><p>You have the right to access, correct, or delete your personal data. To exercise these rights, please contact us through our website.</p><h3>Cookies</h3><p>We use cookies to enhance your browsing experience. See our Cookie Policy for details.</p><h3>Changes to This Policy</h3><p>We may update this Privacy Policy periodically. Changes will be posted on this page.</p>',
+        ),
+        'terms-of-service' => array(
+            'title' => 'Terms of Service',
+            'content' => '<h2>Terms of Service</h2><p>Last updated: June 2026</p><p>By accessing or using Aura Loop\'s website and services, you agree to be bound by these Terms of Service.</p><h3>Services Description</h3><p>Aura Loop provides a platform for luxury streetwear restoration, upcycling, authentication, and trade through a sustainable membership model. Our services include archival preservation, syndicate membership, and digital verification.</p><h3>Membership Terms</h3><p>Membership tiers are subject to availability and may be updated. Members agree to provide accurate information and comply with platform guidelines. Membership fees are non-refundable unless otherwise stated.</p><h3>Intellectual Property</h3><p>All content, trademarks, and intellectual property on this platform are owned by Aura Loop. You may not reproduce, distribute, or create derivative works without permission.</p><h3>Limitation of Liability</h3><p>Aura Loop is not liable for indirect, incidental, or consequential damages arising from your use of the platform. Our total liability is limited to the amount paid for services.</p><h3>Governing Law</h3><p>These terms are governed by applicable laws. Any disputes shall be resolved through arbitration.</p><h3>Changes to Terms</h3><p>We reserve the right to modify these terms. Continued use constitutes acceptance of updated terms.</p>',
+        ),
+        'cookie-policy' => array(
+            'title' => 'Cookie Policy',
+            'content' => '<h2>Cookie Policy</h2><p>Last updated: June 2026</p><p>Aura Loop uses cookies and similar tracking technologies to enhance your browsing experience, analyze site traffic, and understand where our audience comes from.</p><h3>What Are Cookies</h3><p>Cookies are small text files stored on your device when you visit a website. They help us remember your preferences and improve site functionality.</p><h3>Types of Cookies We Use</h3><p><strong>Essential Cookies:</strong> Required for basic site functionality and security.</p><p><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our site, which pages are most popular, and how users navigate.</p><p><strong>Functional Cookies:</strong> Remember your preferences and settings for a personalized experience.</p><h3>Managing Cookies</h3><p>You can control cookies through your browser settings. Disabling certain cookies may affect site functionality.</p><h3>Third-Party Cookies</h3><p>We may use third-party services that set their own cookies. These are governed by the respective third-party privacy policies.</p><h3>Updates</h3><p>We may update this Cookie Policy periodically. Changes will be posted here.</p>',
+        ),
+    );
+
+    foreach ($pages as $slug => $data) {
+        $existing = get_page_by_path($slug, OBJECT, 'page');
+        if (!$existing) {
+            wp_insert_post(array(
+                'post_title'   => $data['title'],
+                'post_content' => $data['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_name'    => $slug,
+            ));
+        }
+    }
+}
+add_action('after_switch_theme', 'aura_create_legal_pages');

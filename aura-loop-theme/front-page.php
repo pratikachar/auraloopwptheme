@@ -41,6 +41,25 @@ get_header();
       <div class="dot-marker"></div>
     </div>
   </div>
+
+  <!-- Mobile loop rings -->
+  <div class="hero-visual-mobile" aria-hidden="true">
+    <div class="loop-stage-mobile">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="ring-center">
+        <svg width="50" height="50" viewBox="0 0 90 90">
+          <path d="M45 12 L22 72 H30 L37.5 52.5 H52.5 L60 72 H68 Z" fill="rgba(255,255,255,0.9)"/>
+          <path d="M41 49 L45 16 L49 49 Z" fill="rgba(1,1,1,0.85)"/>
+          <path d="M45 22 L47.5 32 L57 35 L47.5 38 L45 48 L42.5 38 L33 35 L42.5 32 Z" fill="white"/>
+        </svg>
+        <span class="ring-center-sub">Luxury Streetwear</span>
+      </div>
+      <div class="dot-marker"></div>
+    </div>
+  </div>
+
   <div class="hero-scroll">
     <div class="scroll-track"></div>
     Scroll to explore

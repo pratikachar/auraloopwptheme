@@ -53,4 +53,29 @@
   <?php endif; ?>
 
   <a href="<?php echo esc_url(home_url('/#connect')); ?>" class="nav-pill">Initiate Loop</a>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+  <?php
+  wp_nav_menu(array(
+    'theme_location' => 'mobile',
+    'container'      => false,
+    'menu_class'     => 'mobile-nav-links',
+    'fallback_cb'    => false,
+    'depth'          => 1,
+  ));
+  ?>
+  <?php if (!has_nav_menu('mobile')) : ?>
+    <ul class="mobile-nav-links">
+      <li><a href="<?php echo esc_url(home_url('/#system')); ?>">The Ecosystem</a></li>
+      <li><a href="<?php echo esc_url(home_url('/#membership')); ?>">Membership</a></li>
+      <li><a href="<?php echo esc_url(home_url('/#verify')); ?>">Verification</a></li>
+      <li><a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>">Blog</a></li>
+      <li><a href="<?php echo esc_url(home_url('/#connect')); ?>" class="mobile-cta">Initiate Loop</a></li>
+    </ul>
+  <?php endif; ?>
+</div>
