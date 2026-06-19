@@ -53,6 +53,7 @@ aura-loop-theme/
 - [x] AJAX submission via `admin-ajax.php` + `fetch()` — no page redirect
 - [x] Beautiful modal popup with close button (success / error)
 - [x] Random math captcha (generated per page load, hashed via `wp_hash()`)
+- [x] Captcha refresh button (↻ icon) — fetches new random numbers via AJAX, updates fields + label, clears input
 - [x] Nonce CSRF protection (graceful fallback for cached pages)
 - [x] Submission saved as CPT `aura_submission` (name, email, plan, vision, IP, user agent)
 - [x] Admin notification sent to `project.colorgraphicz@gmail.com`
