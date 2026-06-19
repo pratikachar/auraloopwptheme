@@ -234,8 +234,9 @@ get_header();
         <textarea placeholder="Tell us about your wardrobe vision (optional)" id="visionInput" name="vision"></textarea>
       </div>
       <div class="form-group">
-        <div style="display:flex; align-items:center; gap:1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:0.5rem 1.5rem;">
-          <label style="font-size:0.85rem; color:var(--gray-60); white-space:nowrap;">What is <?php echo $cap1; ?> + <?php echo $cap2; ?>?</label>
+        <div style="display:flex; align-items:center; gap:0.6rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:0.5rem 1rem 0.5rem 1.5rem;">
+          <button type="button" id="captchaRefresh" class="captcha-refresh" aria-label="Refresh captcha" title="New numbers">&#x21bb;</button>
+          <label id="captchaLabel" style="font-size:0.85rem; color:var(--gray-60); white-space:nowrap;">What is <?php echo $cap1; ?> + <?php echo $cap2; ?>?</label>
           <input type="text" placeholder="Answer" required id="captchaInput" name="captcha" style="flex:1; background:none; border:none; padding:0.5rem 0; font-family:var(--font-b); font-size:0.9rem; color:var(--white); outline:none;">
         </div>
       </div>

@@ -223,6 +223,31 @@
     });
   }
 
+  // CAPTCHA REFRESH
+  var captchaBtn = document.getElementById('captchaRefresh');
+  var captchaLabel = document.getElementById('captchaLabel');
+  if (captchaBtn && captchaLabel) {
+    captchaBtn.addEventListener('click', function() {
+      captchaBtn.classList.add('spinning');
+      var params = new URLSearchParams();
+      params.set('action', 'aura_loop_refresh_captcha');
+      params.set('_wpnonce', auraml_ajax.captcha_nonce);
+      fetch(auraml_ajax.ajax_url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.success) {
+            document.querySelector('input[name="cap1"]').value = data.data.cap1;
+            document.querySelector('input[name="cap2"]').value = data.data.cap2;
+            document.querySelector('input[name="cap_token"]').value = data.data.cap_token;
+            captchaLabel.textContent = 'What is ' + data.data.cap1 + ' + ' + data.data.cap2 + '?';
+            document.getElementById('captchaInput').value = '';
+          }
+        })
+        .catch(function() {})
+        .then(function() { captchaBtn.classList.remove('spinning'); });
+    });
+  }
+
   // RESPECT PREFERS-REDUCED-MOTION
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var animatedElements = document.querySelectorAll('.ring, .v-ring, .ticker-track, .scroll-track::after, .dot-marker');
