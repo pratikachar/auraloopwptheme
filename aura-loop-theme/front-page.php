@@ -34,24 +34,6 @@ get_header();
     </div>
   </div>
 
-  <!-- Mobile loop rings -->
-  <div class="hero-visual-mobile" aria-hidden="true">
-    <div class="loop-stage-mobile">
-      <div class="ring ring-1"></div>
-      <div class="ring ring-2"></div>
-      <div class="ring ring-3"></div>
-      <div class="ring-center">
-        <svg width="50" height="50" viewBox="0 0 90 90">
-          <path d="M45 12 L22 72 H30 L37.5 52.5 H52.5 L60 72 H68 Z" fill="rgba(255,255,255,0.9)"/>
-          <path d="M41 49 L45 16 L49 49 Z" fill="rgba(1,1,1,0.85)"/>
-          <path d="M45 22 L47.5 32 L57 35 L47.5 38 L45 48 L42.5 38 L33 35 L42.5 32 Z" fill="white"/>
-        </svg>
-        <span class="ring-center-sub">Luxury Streetwear</span>
-      </div>
-      <div class="dot-marker"></div>
-    </div>
-  </div>
-
   <div class="hero-scroll">
     <div class="scroll-track"></div>
     Scroll to explore
@@ -234,9 +216,8 @@ get_header();
         <textarea placeholder="Tell us about your wardrobe vision (optional)" id="visionInput" name="vision"></textarea>
       </div>
       <div class="form-group">
-        <div style="display:flex; align-items:center; gap:0.6rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:0.5rem 1rem 0.5rem 1.5rem;">
-          <button type="button" id="captchaRefresh" class="captcha-refresh" aria-label="Refresh captcha" title="New numbers">&#x21bb;</button>
-          <label id="captchaLabel" style="font-size:0.85rem; color:var(--gray-60); white-space:nowrap;">What is <?php echo $cap1; ?> + <?php echo $cap2; ?>?</label>
+        <div style="display:flex; align-items:center; gap:1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:0.5rem 1.5rem;">
+          <label style="font-size:0.85rem; color:var(--gray-60); white-space:nowrap;">What is <?php echo $cap1; ?> + <?php echo $cap2; ?>?</label>
           <input type="text" placeholder="Answer" required id="captchaInput" name="captcha" style="flex:1; background:none; border:none; padding:0.5rem 0; font-family:var(--font-b); font-size:0.9rem; color:var(--white); outline:none;">
         </div>
       </div>

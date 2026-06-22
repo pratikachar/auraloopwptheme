@@ -4,7 +4,7 @@ Theme URI: https://aura-loop.com
 Author: colorgraphicz
 Author URI: https://colorgraphicz.com
 Description: A premium circular fashion ecosystem theme for luxury streetwear by colorgraphicz. Features animated hero, membership tiers, authentication showcase, and blog-ready layout. Built for WordPress with full page-builder and plugin compatibility.
-Version: 1.0.0
+Version: 1.0.1
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
@@ -1032,20 +1032,6 @@ img, svg {
   color: rgba(255, 255, 255, 0.28);
 }
 
-.captcha-refresh {
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  line-height: 1;
-  color: var(--gray-60);
-  cursor: pointer;
-  padding: 4px;
-  transition: color 0.2s, transform 0.3s;
-  flex-shrink: 0;
-}
-.captcha-refresh:hover { color: var(--mint); }
-.captcha-refresh.spinning { transform: rotate(360deg); }
-
 /* ========== BACK TO TOP BUTTON ========= */
 .back-to-top {
   position: fixed;
@@ -1671,6 +1657,7 @@ img, svg {
 
 /* ========== MOBILE MENU OVERLAY ========= */
 .mobile-menu {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -1689,6 +1676,10 @@ img, svg {
 .mobile-menu.open {
   visibility: visible;
   opacity: 1;
+}
+
+@media (min-width: 901px) {
+  .mobile-menu { display: none !important; }
 }
 
 .mobile-close {
@@ -1784,91 +1775,6 @@ img, svg {
   background: var(--mint-10);
 }
 
-/* ========== MOBILE LOOP RINGS ========= */
-.hero-visual-mobile {
-  display: none;
-}
-
-@media (max-width: 900px) {
-  .hero-visual-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1.5rem 0;
-    position: relative;
-    min-height: 200px;
-  }
-
-  .loop-stage-mobile {
-    position: relative;
-    width: 200px;
-    height: 200px;
-  }
-
-  .loop-stage-mobile .ring {
-    border-width: 1px;
-  }
-
-  .loop-stage-mobile .ring::before {
-    width: 5px;
-    height: 5px;
-    top: -2.5px;
-  }
-
-  .loop-stage-mobile .ring-1 {
-    width: 100%;
-    height: 100%;
-    animation: spin-slow 18s linear infinite;
-  }
-
-  .loop-stage-mobile .ring-2 {
-    width: calc(100% - 60px);
-    height: calc(100% - 60px);
-    animation: spin-rev 26s linear infinite;
-  }
-
-  .loop-stage-mobile .ring-3 {
-    width: calc(100% - 120px);
-    height: calc(100% - 120px);
-    animation: spin-slow 14s linear infinite;
-  }
-
-  .loop-stage-mobile .ring-center {
-    gap: 4px;
-  }
-
-  .loop-stage-mobile .ring-center svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  .loop-stage-mobile .ring-center span {
-    font-size: 0.45rem;
-    letter-spacing: 0.28em;
-  }
-}
-
-@media (max-width: 600px) {
-  .hero-visual-mobile {
-    min-height: 180px;
-  }
-
-  .loop-stage-mobile {
-    width: 160px;
-    height: 160px;
-  }
-
-  .loop-stage-mobile .ring-2 {
-    width: calc(100% - 50px);
-    height: calc(100% - 50px);
-  }
-
-  .loop-stage-mobile .ring-3 {
-    width: calc(100% - 100px);
-    height: calc(100% - 100px);
-  }
-}
-
 /* ========== RESPONSIVE ========= */
 @media (max-width: 1100px) {
   .nav, .nav.stuck { padding-left: 3rem; padding-right: 3rem; }
@@ -1880,7 +1786,7 @@ img, svg {
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: 130vh; }
   .hero-visual { display: none; }
-  .hero-visual-mobile { display: flex; }
+  .mobile-menu { display: block; }
   .hamburger { display: flex; }
   .nav-links, .nav-links ul { display: none; }
   .nav-links .sub-menu { display: none; }

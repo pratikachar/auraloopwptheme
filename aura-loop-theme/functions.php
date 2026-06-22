@@ -55,9 +55,8 @@ function aura_loop_scripts() {
     // Theme JavaScript
     wp_enqueue_script('aura-loop-theme', get_template_directory_uri() . '/assets/js/theme.js', array('jquery'), wp_get_theme()->get('Version'), true);
     wp_localize_script('aura-loop-theme', 'auraml_ajax', array(
-        'ajax_url'      => admin_url('admin-ajax.php'),
-        'nonce'         => wp_create_nonce('aura_contact_nonce'),
-        'captcha_nonce' => wp_create_nonce('aura_captcha_nonce'),
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('aura_contact_nonce'),
     ));
 }
 add_action('wp_enqueue_scripts', 'aura_loop_scripts');
@@ -262,25 +261,7 @@ function aura_loop_handle_contact() {
 add_action('wp_ajax_nopriv_aura_loop_contact', 'aura_loop_handle_contact');
 add_action('wp_ajax_aura_loop_contact', 'aura_loop_handle_contact');
 
-// ==============================
-// CAPTCHA REFRESH (AJAX)
-// ==============================
-function aura_loop_refresh_captcha() {
-    if (!wp_verify_nonce($_POST['_wpnonce'], 'aura_captcha_nonce')) {
-        wp_send_json_error(array('msg' => 'Security check failed.'));
-    }
-    $cap1 = rand(3, 12);
-    $cap2 = rand(4, 15);
-    $cap_answer = $cap1 + $cap2;
-    $cap_token = wp_hash($cap_answer . '|aura-loop-captcha');
-    wp_send_json_success(array(
-        'cap1' => $cap1,
-        'cap2' => $cap2,
-        'cap_token' => $cap_token,
-    ));
-}
-add_action('wp_ajax_nopriv_aura_loop_refresh_captcha', 'aura_loop_refresh_captcha');
-add_action('wp_ajax_aura_loop_refresh_captcha', 'aura_loop_refresh_captcha');
+
 
 // ==============================
 // SEARCH FORM
