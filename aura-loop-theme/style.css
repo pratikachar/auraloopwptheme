@@ -1674,6 +1674,7 @@ img, svg {
 }
 
 .mobile-menu.open {
+  display: block;
   visibility: visible;
   opacity: 1;
 }
